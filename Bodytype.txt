@@ -1,0 +1,147 @@
+1a:
+git init<project directory>
+cd project name 
+touch helloworld.c 
+git add helloworld.c 
+git commit -m "files" 
+git status 
+git log
+1b:
+git branch feature-branch
+git switch feature-branch
+gedit swap.c
+git add swap.c
+git commit -m "swap"
+git checkout master
+git merge feature-branch
+git log
+
+
+
+
+2a:
+git branch
+git switch NewBranch(if exists else) git checkout -b NewBranch
+touch merge.c
+git add .
+git stash
+git checkout master
+ls
+git stash list
+git stash apply stash@{0}
+git commit -m "hello"
+2b:
+git clone "https://...."
+
+
+
+
+
+
+
+3a:
+git clone -b main https://github.com/Binduraj-16/To-Do
+cd To-Do
+ls
+cat bin.txt
+touch text1.txt
+git add .
+git commit -m "new file commit"
+git pull origin main --rebase
+git push origin main
+# (If authentication required → use GitHub Personal Access Token as password)
+git checkout -b slave
+touch file2.txt
+git add .
+git commit -m "work in slave branch"
+git fetch origin
+git rebase origin/main
+git checkout main
+git merge slave
+git push origin main
+git checkout slave
+ls
+3b:
+git clone https://github.com/Binduraj-16/To-Do
+cd To-Do
+gedit prgm.txt
+# (write something like: "This is main branch code" and save)
+git add prgm.txt
+git commit -m "prgm in main"
+git checkout -b feature-branch
+gedit prgm.txt
+# (change content: "This is feature branch code" and save)
+git add prgm.txt
+git commit -m "prgm in feature-branch"
+git checkout main
+git merge feature-branch (if no conflict then git push origin main)
+CONFLICT (content): Merge conflict in prgm.txt
+# 9. Open file to fix conflict
+gedit prgm.txt
+<<<<<<< HEAD
+This is main branch code
+=======
+This is feature branch code
+>>>>>>> feature-branch
+remove <<<<<<< ======= >>>>>>>
+git add prgm.txt
+git commit -m "resolved merge conflict"
+git push origin main
+
+
+
+
+
+
+
+4a
+git init
+git checkout -b main
+notepad file1.txt
+git add file1.txt
+git commit -m "commit 1"
+notepad file1.txt
+git add file1.txt
+git commit -m "commit 2"
+notepad file1.txt
+git add file1.txt
+git commit -m "commit 3"
+# keep editing same file and committing
+# repeat till commit 10
+git log
+git tag v1.0
+git log
+git push origin main(if it does not push then pull clear the conflicts, add, commit then pull agian and push)
+git push origin v1.0
+4b
+git init
+git checkout -b main
+git checkout -b source-branch
+touch f1.txt
+git add f1.txt
+git commit -m "commit 1"
+notepad f1.txt
+git add f1.txt
+git commit -m "commit 2"
+notepad f1.txt
+git add f1.txt
+git commit -m "commit 3"
+git checkout main
+git log source-branch --oneline
+git cherry-pick <start-commit>^..<end-commit>
+git cherry-pick --continue
+git log --oneline
+
+if u wanna delete smtg rm -rf file name
+
+
+
+
+
+
+5a
+git log --oneline
+git show <commit-id>
+5b
+git log --author="author name" --since="start date" --until="end date" --oneline
+do 10 commits for all do git init at start
