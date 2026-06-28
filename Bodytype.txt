@@ -145,3 +145,170 @@ git show <commit-id>
 5b
 git log --author="author name" --since="start date" --until="end date" --oneline
 do 10 commits for all do git init at start
+
+
+6a
+mkdir lab1
+cd lab1
+git --version
+git init
+echo "hello" > a1.txt
+git add .
+git commit -m "1st commit"
+echo "change 2" >> a1.txt
+git add .
+git commit -m "2nd commit"
+echo "change 3" >> a1.txt
+git add .
+git commit -m "3rd commit"
+echo "change 4" >> a2.txt
+git add .
+git commit -m "4th commit"
+echo "change 4" >> a2.txt
+git add .
+git commit -m "5th commit"
+Display last 5 commits:
+git log -n 5 --oneline
+Revert a commit:
+git revert commit-id
+Verify:
+git log --oneline
+6b:
+Go to repo:
+cd lab1
+git config --global --list
+Create aliases:
+git config --global alias.st status
+git config --global alias.lg "log --oneline --graph"
+git config --global alias.co "checkout"
+git config --global alias.br "branch"
+git config --global alias.last "log -1 HEAD"
+git config --global alias.undo "reset HEAD~"
+git config --global alias.last "log -1 HEAD"
+git config --global alias.undo "reset HEAD --"
+Check all aliases:
+git config --global --list | grep alias
+
+
+
+7a:
+mkdir lab3
+cd lab3
+git init
+git add .
+echo "initial" > file1.txt
+git add .
+git commit -m "initial commit"
+Create feature branch:
+git checkout -b feature
+echo "feature.root" > file.txt
+git add .
+git commit -m "work on feature"
+echo "feature.root" >> file.txt
+git add .
+git commit -m "merge feature into main"
+git checkout main
+git merge feature -m "merge feature into main"
+git log --oneline
+
+
+7b:
+git checkout -b test-branch
+echo "hello" > file2.txt
+git add .
+git commit -m "added file.txt"
+git checkout main
+git merge test-branch
+git branch -D test-branch
+git reflog
+git checkout -b test-branch cc0030
+git log --oneline
+
+
+8a:
+mkdir git-clean-demo
+cd git-clean-demo
+git init
+echo "hello" > file1.txt
+git add .
+git commit -m "initial commit"
+echo "Temp data" > temp1.txt
+echo "log file" > temp2.log
+mkdir testfolder
+echo "sample" > testfolder/sample.txt
+git status
+Preview what will be removed:
+git clean -n
+Remove untracked files:
+git clean -f
+Remove files + directories:
+git clean -fd
+Remove only specific files:
+git clean -f temp1.txt
+
+
+
+8b:
+mkdir git-archive-demo
+cd git-archive-demo
+git init
+echo "hello world" > file1.txt
+git add .
+git commit -m "initial commit"
+Create zip of branch:
+git archive --format=zip --output=feature.zip feature
+Create tar of branch:
+git archive --format=tar --output=feature.tar feature
+Archive specific commit:
+git log --oneline
+git archive --format=zip --output=commit.zip <commit-id>
+git archive --format=tar --output=commit.tar --output=commit.tar <commit-id>
+Verify:
+git status
+git archive
+
+
+10:
+Step 1: Install Plugins
+Manage Jenkins → Manage Plugins → install:
+ - Git plugin
+ - GitHub plugin
+ - GitHub Integration Plugin
+ - GitHub Branch Source
+ - Pipeline
+Step 2: Configure Git path
+where git
+Manage Jenkins → Tools → Git installations
+ Path to Git executable: git.exe
+→ Apply & Save
+Step 3: Add Credentials
+Manage Jenkins → Security → Credentials
+→ System → Global credentials → Add Credentials
+ Kind: Username with password
+ Username: <your GitHub username>
+ Password: <your GitHub token>
+ ID: Jenkins_demo
+→ Create
+Step 4: Create Freestyle Job
+New Item → jenkins_git_project → Freestyle project → OK
+Source Code Management → Git:
+ Repository URL: https://github.com/YourUsername/jenkins_git.git
+ Credentials: Jenkins_demo
+ Branch: */main
+Additional Behaviours → Add → Checkout to a sub-directory
+ Local subdirectory: D:\test
+Step 5: Python file (add.py) — push this to your GitHub repo
+a = 10
+b = 20
+result = a + b
+print("Adding two numbers:")
+print("a =", a)
+print("b =", b)
+print("Result (a + b) =", result)
+Step 6: Build Step
+Build Steps → Execute Windows batch command:
+ echo "Starting Jenkins Build..."
+ echo "Running Python addition script"
+ python D:\test\add.py
+ echo "Build Completed Successfully"
+→ Save → Build Now
